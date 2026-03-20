@@ -159,6 +159,22 @@
         [data-view="assonance"] .ass-4 { background-color: #64748B; color: white; } /* /oʊ/ The Hollow Void */
         [data-view="assonance"] .ass-5 { background-color: #F43F5E; color: white; } /* /eɪ/ The Distant Horizon */
 
+        /* Sense Highlights */
+        .sense-h {
+            transition: background-color 0.8s ease, color 0.8s ease, filter 0.35s ease, transform 0.35s ease;
+            padding: 0.15em 3px 0.15em 0;
+            border-radius: 2px;
+        }
+        [data-view="sense"] .sense-1 { background-color: #E5E7EB; color: #1f2937; }
+        [data-view="sense"] .sense-2 { background-color: #FEF3C7; color: #1f2937; }
+        [data-view="sense"] .sense-3 { background-color: #FFEDD5; color: #1f2937; }
+        [data-view="sense"] .sense-4 { background-color: #FEE2E2; color: #1f2937; }
+        [data-view="sense"] .sense-5 { background-color: #F3E8FF; color: #1f2937; }
+        [data-view="sense"] .sense-6 { background-color: #F1F5F9; color: #1f2937; }
+        [data-view="sense"] .sense-7 { background-color: #FEF9C3; color: #1f2937; }
+        [data-view="sense"] .sense-8 { background-color: #FCA5A5; color: #1f2937; }
+        [data-view="sense"] .sense-9 { background-color: #CCFBF1; color: #1f2937; }
+
         /* Hover Sync — dim non-active highlights */
         [data-view="assonance"].ass-hovering .ass-h:not(.ass-active) {
             opacity: 0.2;
@@ -170,6 +186,10 @@
         }
         [data-view="rhyme"].rhyme-hovering .rhyme-highlight-span:not(.rhyme-active) {
             opacity: 0.25;
+            transition: opacity 0.5s ease;
+        }
+        [data-view="sense"].sense-hovering .sense-h:not(.sense-active) {
+            opacity: 0.2;
             transition: opacity 0.5s ease;
         }
 
@@ -189,23 +209,58 @@
 <body class="font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen">
 <div class="flex flex-col lg:flex-row min-h-screen relative" data-view="default" id="main-container">
 <!-- Sidebar / Top Nav -->
-<aside class="bg-surface lg:bg-transparent lg:fixed left-0 top-0 lg:h-full w-full lg:w-64 z-40 border-b lg:border-r border-outline-variant/10">
+<aside class="sticky top-0 bg-surface/95 backdrop-blur-sm lg:bg-transparent lg:backdrop-blur-0 lg:fixed left-0 lg:top-0 lg:h-full w-full lg:w-64 z-40 border-b lg:border-r border-outline-variant/10">
 <div class="flex flex-col p-4 lg:p-8 gap-6 h-full lg:pt-24">
-<nav class="flex flex-row lg:flex-col overflow-x-auto lg:overflow-visible gap-2 lg:gap-4 pb-2 lg:pb-0">
-<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-2 lg:py-3 bg-[#efefd7]/50 text-[#446464] font-bold border-l-2 lg:border-l-4 border-[#446464] font-sans uppercase tracking-[0.1em] text-[0.65rem] lg:text-[0.75rem] transition-all duration-300" id="btn-default" onclick="setView('default')">
+<div class="relative lg:hidden" id="mobile-mode-picker">
+<button aria-controls="mobile-mode-menu" aria-expanded="false" class="w-full flex items-center justify-between gap-4 rounded-lg border border-outline-variant/20 bg-[#efefd7]/40 px-4 py-3 text-left transition-all duration-300" id="mobile-mode-button" onclick="toggleMobileMenu()">
+<span class="flex min-w-0 items-center gap-3">
+<span class="material-symbols-outlined text-base text-[#446464]" id="mobile-mode-icon">article</span>
+<span class="block min-w-0 truncate font-label text-[0.8rem] uppercase tracking-[0.1em] text-[#446464]" id="mobile-mode-label">Default</span>
+</span>
+<span class="material-symbols-outlined text-base text-[#4a4738]" id="mobile-mode-chevron">expand_more</span>
+</button>
+<nav class="absolute left-0 right-0 top-full mt-2 hidden flex-col gap-2 rounded-lg border border-outline-variant/20 bg-surface/95 p-2 shadow-lg backdrop-blur-sm" id="mobile-mode-menu">
+<button class="nav-btn mobile-nav-btn flex items-center gap-3 rounded-md px-4 py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.7rem] transition-all duration-300" data-icon="article" data-label="Default" data-view-target="default" onclick="setView('default')">
 <span class="material-symbols-outlined text-sm lg:text-base">article</span>
                         Default
                     </button>
-<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-2 lg:py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.65rem] lg:text-[0.75rem] transition-all duration-300" id="btn-rhyme" onclick="setView('rhyme')">
+<button class="nav-btn mobile-nav-btn flex items-center gap-3 rounded-md px-4 py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.7rem] transition-all duration-300" data-icon="visibility" data-label="Sense" data-view-target="sense" onclick="setView('sense')">
+<span class="material-symbols-outlined text-sm lg:text-base">visibility</span>
+                        Sense
+                    </button>
+<button class="nav-btn mobile-nav-btn flex items-center gap-3 rounded-md px-4 py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.7rem] transition-all duration-300" data-icon="format_quote" data-label="Rhyme" data-view-target="rhyme" onclick="setView('rhyme')">
 <span class="material-symbols-outlined text-sm lg:text-base">format_quote</span>
                         Rhyme
                     </button>
-<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-2 lg:py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.65rem] lg:text-[0.75rem] transition-all duration-300" id="btn-alliteration" onclick="setView('alliteration')">
+<button class="nav-btn mobile-nav-btn flex items-center gap-3 rounded-md px-4 py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.7rem] transition-all duration-300" data-icon="auto_awesome" data-label="Alliteration" data-view-target="alliteration" onclick="setView('alliteration')">
 <span class="material-symbols-outlined text-sm lg:text-base">auto_awesome</span>
                         Alliteration
                     </button>
-<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-2 lg:py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.65rem] lg:text-[0.75rem] transition-all duration-300" id="btn-assonance" onclick="setView('assonance')">
+<button class="nav-btn mobile-nav-btn flex items-center gap-3 rounded-md px-4 py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.7rem] transition-all duration-300" data-icon="graphic_eq" data-label="Assonance" data-view-target="assonance" onclick="setView('assonance')">
 <span class="material-symbols-outlined text-sm lg:text-base">graphic_eq</span>
+                        Assonance
+                    </button>
+    </nav>
+</div>
+<nav class="hidden lg:flex lg:flex-col lg:overflow-visible gap-4">
+<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-3 bg-[#efefd7]/50 text-[#446464] font-bold border-l-4 border-[#446464] font-sans uppercase tracking-[0.1em] text-[0.75rem] transition-all duration-300" data-icon="article" data-label="Default" data-view-target="default" onclick="setView('default')">
+<span class="material-symbols-outlined text-base">article</span>
+                        Default
+                    </button>
+<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.75rem] transition-all duration-300" data-icon="visibility" data-label="Sense" data-view-target="sense" onclick="setView('sense')">
+<span class="material-symbols-outlined text-sm lg:text-base">visibility</span>
+                        Sense
+                    </button>
+<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.75rem] transition-all duration-300" data-icon="format_quote" data-label="Rhyme" data-view-target="rhyme" onclick="setView('rhyme')">
+<span class="material-symbols-outlined text-base">format_quote</span>
+                        Rhyme
+                    </button>
+<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.75rem] transition-all duration-300" data-icon="auto_awesome" data-label="Alliteration" data-view-target="alliteration" onclick="setView('alliteration')">
+<span class="material-symbols-outlined text-base">auto_awesome</span>
+                        Alliteration
+                    </button>
+<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.75rem] transition-all duration-300" data-icon="graphic_eq" data-label="Assonance" data-view-target="assonance" onclick="setView('assonance')">
+<span class="material-symbols-outlined text-base">graphic_eq</span>
                         Assonance
                     </button>
 </nav>
@@ -222,72 +277,72 @@
 <article class="relative">
 <div class="space-y-4 sm:space-y-6 md:space-y-8 font-headline text-xl sm:text-2xl md:text-3xl lg:text-[2.25rem] leading-[1.3] lg:leading-[1.4] text-on-surface-variant">
 <div class="line-container flex items-baseline" data-line="0">
-<span class="flex-1">I met a traveller from an <span class="ass-h ass-3">antique</span> <span class="rhyme-target rhyme-highlight-span rhyme-a ass-h ass-1">land</span>,</span>
+<span class="flex-1"><span class="sense-h sense-1">I met a traveller from an <span class="ass-h ass-3">antique</span> <span class="rhyme-target rhyme-highlight-span rhyme-a ass-h ass-1">land</span>,</span></span>
 <span class="line-num">1</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">A</span>
 </div>
 <div class="line-container flex items-baseline" data-line="1">
-<span class="flex-1">Who said—“<span class="alt-h alt-2">Two</span> vast and <span class="alt-h alt-2">trunkless</span> legs of <span class="rhyme-target rhyme-highlight-span rhyme-b alt-h alt-1 ass-h ass-4">stone</span></span>
+<span class="flex-1"><span class="sense-h sense-2">Who said—“<span class="alt-h alt-2">Two</span> vast and <span class="alt-h alt-2">trunkless</span> legs of <span class="rhyme-target rhyme-highlight-span rhyme-b alt-h alt-1 ass-h ass-4">stone</span></span></span>
 <span class="line-num">2</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">B</span>
 </div>
 <div class="line-container flex items-baseline" data-line="2">
-<span class="flex-1"><span class="alt-h alt-1">Stand</span> in the desert. Near them, on the <span class="rhyme-target rhyme-highlight-span rhyme-a alt-h alt-1 ass-h ass-1">sand</span>,</span>
+<span class="flex-1"><span class="sense-h sense-2"><span class="alt-h alt-1">Stand</span> in the desert.</span> <span class="sense-h sense-3">Near them, on the <span class="rhyme-target rhyme-highlight-span rhyme-a alt-h alt-1 ass-h ass-1">sand</span>,</span></span>
 <span class="line-num">3</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">A</span>
 </div>
 <div class="line-container flex items-baseline" data-line="3">
-<span class="flex-1">Half <span class="alt-h alt-1">sunk</span>, a <span class="alt-h alt-1 ass-h ass-1">shattered</span> visage <span class="ass-h ass-2">lies</span>, whose <span class="rhyme-target rhyme-highlight-span rhyme-b">frown</span>,</span>
+<span class="flex-1"><span class="sense-h sense-3">Half <span class="alt-h alt-1">sunk</span>, a <span class="alt-h alt-1 ass-h ass-1">shattered</span> visage <span class="ass-h ass-2">lies</span>,</span> <span class="sense-h sense-4">whose <span class="rhyme-target rhyme-highlight-span rhyme-b">frown</span>,</span></span>
 <span class="line-num">4</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">B</span>
 </div>
 <div class="line-container flex items-baseline" data-line="4">
-<span class="flex-1">And <span class="alt-h alt-8">wrinkled</span> lip, and <span class="ass-h ass-3">sneer</span> of <span class="alt-h alt-3 ass-h ass-4">cold</span> <span class="rhyme-target rhyme-highlight-span rhyme-a alt-h alt-3 ass-h ass-1">command</span>,</span>
+<span class="flex-1"><span class="sense-h sense-4">And <span class="alt-h alt-8">wrinkled</span> lip, and <span class="ass-h ass-3">sneer</span> of <span class="alt-h alt-3 ass-h ass-4">cold</span> <span class="rhyme-target rhyme-highlight-span rhyme-a alt-h alt-3 ass-h ass-1">command</span>,</span></span>
 <span class="line-num">5</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">A</span>
 </div>
 <div class="line-container flex items-baseline" data-line="5">
-<span class="flex-1">Tell that its <span class="alt-h alt-4">sculptor</span> well those <span class="ass-h ass-1">passions</span> <span class="rhyme-target rhyme-highlight-span rhyme-c alt-h alt-8 ass-h ass-3">read</span></span>
+<span class="flex-1"><span class="sense-h sense-5">Tell that its <span class="alt-h alt-4">sculptor</span> well those <span class="ass-h ass-1">passions</span> <span class="rhyme-target rhyme-highlight-span rhyme-c alt-h alt-8 ass-h ass-3">read</span></span></span>
 <span class="line-num">6</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">C</span>
 </div>
 <div class="line-container flex items-baseline" data-line="6">
-<span class="flex-1">Which yet <span class="alt-h alt-4 ass-h ass-2">survive</span>, <span class="alt-h alt-4 ass-h ass-1">stamped</span> on <span class="ass-h ass-3">these</span> <span class="ass-h ass-2">lifeless</span> <span class="rhyme-target rhyme-highlight-span rhyme-d">things</span>,</span>
+<span class="flex-1"><span class="sense-h sense-5">Which yet <span class="alt-h alt-4 ass-h ass-2">survive</span>, <span class="alt-h alt-4 ass-h ass-1">stamped</span> on <span class="ass-h ass-3">these</span> <span class="ass-h ass-2">lifeless</span> <span class="rhyme-target rhyme-highlight-span rhyme-d">things</span>,</span></span>
 <span class="line-num">7</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">D</span>
 </div>
 <div class="line-container flex items-baseline" data-line="7">
-<span class="flex-1">The <span class="alt-h alt-5 ass-h ass-1">hand</span> that mocked them, and the <span class="alt-h alt-5">heart</span> that <span class="rhyme-target rhyme-highlight-span rhyme-c">fed</span>;</span>
+<span class="flex-1"><span class="sense-h sense-5">The <span class="alt-h alt-5 ass-h ass-1">hand</span> that mocked them, and the <span class="alt-h alt-5">heart</span> that <span class="rhyme-target rhyme-highlight-span rhyme-c">fed</span>;</span></span>
 <span class="line-num">8</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">C</span>
 </div>
 <div class="line-container flex items-baseline" data-line="8">
-<span class="flex-1">And on the pedestal, <span class="ass-h ass-3">these</span> <span class="alt-h alt-13">words</span> <span class="rhyme-target rhyme-highlight-span rhyme-e ass-h ass-3">appear</span>:</span>
+<span class="flex-1"><span class="sense-h sense-6">And on the pedestal, <span class="ass-h ass-3">these</span> <span class="alt-h alt-13">words</span> <span class="rhyme-target rhyme-highlight-span rhyme-e ass-h ass-3">appear</span>:</span></span>
 <span class="line-num">9</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">E</span>
 </div>
 <div class="line-container flex items-baseline italic text-on-surface" data-line="9">
-<span class="flex-1 pl-4 md:pl-8 lg:pl-12 border-l border-primary/20">‘<span class="alt-h alt-6">My</span> name is Ozymandias, <span class="alt-h alt-12">King</span> of <span class="rhyme-target rhyme-highlight-span rhyme-d alt-h alt-12">Kings</span>;</span>
+<span class="flex-1 pl-4 md:pl-8 lg:pl-12 border-l border-primary/20"><span class="sense-h sense-7">‘<span class="alt-h alt-6">My</span> name is Ozymandias, <span class="alt-h alt-12">King</span> of <span class="rhyme-target rhyme-highlight-span rhyme-d alt-h alt-12">Kings</span>;</span></span>
 <span class="line-num">10</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">D</span>
 </div>
 <div class="line-container flex items-baseline italic text-on-surface" data-line="10">
-<span class="flex-1 pl-4 md:pl-8 lg:pl-12 border-l border-primary/20">Look on my <span class="alt-h alt-13">Works</span>, ye <span class="alt-h alt-6 ass-h ass-2">Mighty</span>, and <span class="rhyme-target rhyme-highlight-span rhyme-e">despair</span>!’</span>
+<span class="flex-1 pl-4 md:pl-8 lg:pl-12 border-l border-primary/20"><span class="sense-h sense-7">Look on my <span class="alt-h alt-13">Works</span>, ye <span class="alt-h alt-6 ass-h ass-2">Mighty</span>, and <span class="rhyme-target rhyme-highlight-span rhyme-e">despair</span>!’</span></span>
 <span class="line-num">11</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">E</span>
 </div>
 <div class="line-container flex items-baseline pt-4 lg:pt-8" data-line="11">
-<span class="flex-1">Nothing <span class="alt-h alt-7 ass-h ass-2">beside</span> <span class="alt-h alt-8">remains</span>. <span class="alt-h alt-8">Round</span> the <span class="rhyme-target rhyme-highlight-span rhyme-f ass-h ass-5">decay</span></span>
+<span class="flex-1"><span class="sense-h sense-8">Nothing <span class="alt-h alt-7 ass-h ass-2">beside</span> <span class="alt-h alt-8">remains</span>.</span> <span class="sense-h sense-9"><span class="alt-h alt-8">Round</span> the <span class="rhyme-target rhyme-highlight-span rhyme-f ass-h ass-5">decay</span></span></span>
 <span class="line-num">12</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">F</span>
 </div>
 <div class="line-container flex items-baseline" data-line="12">
-<span class="flex-1">Of that colossal <span class="alt-h alt-8">Wreck</span>, <span class="alt-h alt-7">boundless</span> and <span class="alt-h alt-7 rhyme-target rhyme-highlight-span rhyme-e">bare</span></span>
+<span class="flex-1"><span class="sense-h sense-9">Of that colossal <span class="alt-h alt-8">Wreck</span>, <span class="alt-h alt-7">boundless</span> and <span class="alt-h alt-7 rhyme-target rhyme-highlight-span rhyme-e">bare</span></span></span>
 <span class="line-num">13</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">E</span>
 </div>
 <div class="line-container flex items-baseline" data-line="13">
-<span class="flex-1">The <span class="alt-h alt-9 ass-h ass-4">lone</span> and <span class="alt-h alt-9">level</span> <span class="alt-h alt-10 ass-h ass-1">sands</span> <span class="alt-h alt-10">stretch</span> far <span class="rhyme-target rhyme-highlight-span rhyme-f ass-h ass-5">away</span>.”</span>
+<span class="flex-1"><span class="sense-h sense-9">The <span class="alt-h alt-9 ass-h ass-4">lone</span> and <span class="alt-h alt-9">level</span> <span class="alt-h alt-10 ass-h ass-1">sands</span> <span class="alt-h alt-10">stretch</span> far <span class="rhyme-target rhyme-highlight-span rhyme-f ass-h ass-5">away</span>.”</span></span>
 <span class="line-num">14</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">F</span>
 </div>
@@ -297,6 +352,26 @@
 </main>
 </div>
 <script>
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-mode-menu');
+            const button = document.getElementById('mobile-mode-button');
+            const chevron = document.getElementById('mobile-mode-chevron');
+            if (!menu || !button || !chevron) return;
+            menu.classList.add('hidden');
+            button.setAttribute('aria-expanded', 'false');
+            chevron.textContent = 'expand_more';
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-mode-menu');
+            const button = document.getElementById('mobile-mode-button');
+            const chevron = document.getElementById('mobile-mode-chevron');
+            if (!menu || !button || !chevron) return;
+            const isHidden = menu.classList.toggle('hidden');
+            button.setAttribute('aria-expanded', String(!isHidden));
+            chevron.textContent = isHidden ? 'expand_more' : 'expand_less';
+        }
+
         function setView(viewName) {
             const container = document.getElementById('main-container');
             container.setAttribute('data-view', viewName);
@@ -304,15 +379,25 @@
             // Update Nav Button Styles
             const buttons = document.querySelectorAll('.nav-btn');
             buttons.forEach(btn => {
-                btn.classList.remove('bg-[#efefd7]/50', 'text-[#446464]', 'font-bold', 'border-l-2', 'lg:border-l-4', 'border-[#446464]');
+                btn.classList.remove('bg-[#efefd7]/50', 'text-[#446464]', 'font-bold', 'border-l-2', 'lg:border-l-4', 'border-l-4', 'border-[#446464]');
                 btn.classList.add('text-[#4a4738]');
             });
 
-            const activeBtn = document.getElementById('btn-' + viewName);
-            if (activeBtn) {
+            const activeButtons = document.querySelectorAll('[data-view-target="' + viewName + '"]');
+            activeButtons.forEach(activeBtn => {
                 activeBtn.classList.remove('text-[#4a4738]');
                 activeBtn.classList.add('bg-[#efefd7]/50', 'text-[#446464]', 'font-bold', 'border-l-2', 'lg:border-l-4', 'border-[#446464]');
+            });
+
+            const mobileActiveBtn = document.querySelector('.mobile-nav-btn[data-view-target="' + viewName + '"]');
+            const mobileLabel = document.getElementById('mobile-mode-label');
+            const mobileIcon = document.getElementById('mobile-mode-icon');
+            if (mobileActiveBtn && mobileLabel && mobileIcon) {
+                mobileLabel.textContent = mobileActiveBtn.dataset.label || '';
+                mobileIcon.textContent = mobileActiveBtn.dataset.icon || 'article';
             }
+
+            closeMobileMenu();
 
         }
 
@@ -373,6 +458,27 @@
                 mainContainer.classList.remove('ass-hovering');
                 document.querySelectorAll('.ass-active').forEach(p => p.classList.remove('ass-active'));
             });
+        });
+
+        // Hover-to-Sync: dim all non-active sense highlights on hover
+        document.querySelectorAll('.sense-h').forEach(el => {
+            const group = Array.from(el.classList).find(c => c.startsWith('sense-') && c !== 'sense-h');
+            if (!group) return;
+            el.addEventListener('mouseenter', () => {
+                if (mainContainer.getAttribute('data-view') !== 'sense') return;
+                mainContainer.classList.add('sense-hovering');
+                document.querySelectorAll('.' + group).forEach(p => p.classList.add('sense-active'));
+            });
+            el.addEventListener('mouseleave', () => {
+                mainContainer.classList.remove('sense-hovering');
+                document.querySelectorAll('.sense-active').forEach(p => p.classList.remove('sense-active'));
+            });
+        });
+
+        document.addEventListener('click', event => {
+            const picker = document.getElementById('mobile-mode-picker');
+            if (!picker || picker.contains(event.target)) return;
+            closeMobileMenu();
         });
 
         // Initialize View
