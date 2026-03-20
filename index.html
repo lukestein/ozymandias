@@ -159,6 +159,22 @@
         [data-view="assonance"] .ass-4 { background-color: #64748B; color: white; } /* /oʊ/ The Hollow Void */
         [data-view="assonance"] .ass-5 { background-color: #F43F5E; color: white; } /* /eɪ/ The Distant Horizon */
 
+        /* Sense Highlights */
+        .sense-h {
+            transition: background-color 0.8s ease, color 0.8s ease, filter 0.35s ease, transform 0.35s ease;
+            padding: 0.15em 3px 0.15em 0;
+            border-radius: 2px;
+        }
+        [data-view="sense"] .sense-1 { background-color: #E5E7EB; color: #1f2937; }
+        [data-view="sense"] .sense-2 { background-color: #FEF3C7; color: #1f2937; }
+        [data-view="sense"] .sense-3 { background-color: #FFEDD5; color: #1f2937; }
+        [data-view="sense"] .sense-4 { background-color: #FEE2E2; color: #1f2937; }
+        [data-view="sense"] .sense-5 { background-color: #F3E8FF; color: #1f2937; }
+        [data-view="sense"] .sense-6 { background-color: #F1F5F9; color: #1f2937; }
+        [data-view="sense"] .sense-7 { background-color: #FEF9C3; color: #1f2937; }
+        [data-view="sense"] .sense-8 { background-color: #FCA5A5; color: #1f2937; }
+        [data-view="sense"] .sense-9 { background-color: #CCFBF1; color: #1f2937; }
+
         /* Hover Sync — dim non-active highlights */
         [data-view="assonance"].ass-hovering .ass-h:not(.ass-active) {
             opacity: 0.2;
@@ -170,6 +186,10 @@
         }
         [data-view="rhyme"].rhyme-hovering .rhyme-highlight-span:not(.rhyme-active) {
             opacity: 0.25;
+            transition: opacity 0.5s ease;
+        }
+        [data-view="sense"].sense-hovering .sense-h:not(.sense-active) {
+            opacity: 0.2;
             transition: opacity 0.5s ease;
         }
 
@@ -208,6 +228,10 @@
 <span class="material-symbols-outlined text-sm lg:text-base">graphic_eq</span>
                         Assonance
                     </button>
+<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-2 lg:py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.65rem] lg:text-[0.75rem] transition-all duration-300" id="btn-sense" onclick="setView('sense')">
+<span class="material-symbols-outlined text-sm lg:text-base">visibility</span>
+                        Sense
+                    </button>
 </nav>
 </div>
 </aside>
@@ -222,72 +246,72 @@
 <article class="relative">
 <div class="space-y-4 sm:space-y-6 md:space-y-8 font-headline text-xl sm:text-2xl md:text-3xl lg:text-[2.25rem] leading-[1.3] lg:leading-[1.4] text-on-surface-variant">
 <div class="line-container flex items-baseline" data-line="0">
-<span class="flex-1">I met a traveller from an <span class="ass-h ass-3">antique</span> <span class="rhyme-target rhyme-highlight-span rhyme-a ass-h ass-1">land</span>,</span>
+<span class="flex-1"><span class="sense-h sense-1">I met a traveller from an <span class="ass-h ass-3">antique</span> <span class="rhyme-target rhyme-highlight-span rhyme-a ass-h ass-1">land</span>,</span></span>
 <span class="line-num">1</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">A</span>
 </div>
 <div class="line-container flex items-baseline" data-line="1">
-<span class="flex-1">Who said—“<span class="alt-h alt-2">Two</span> vast and <span class="alt-h alt-2">trunkless</span> legs of <span class="rhyme-target rhyme-highlight-span rhyme-b alt-h alt-1 ass-h ass-4">stone</span></span>
+<span class="flex-1"><span class="sense-h sense-2">Who said—“<span class="alt-h alt-2">Two</span> vast and <span class="alt-h alt-2">trunkless</span> legs of <span class="rhyme-target rhyme-highlight-span rhyme-b alt-h alt-1 ass-h ass-4">stone</span></span></span>
 <span class="line-num">2</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">B</span>
 </div>
 <div class="line-container flex items-baseline" data-line="2">
-<span class="flex-1"><span class="alt-h alt-1">Stand</span> in the desert. Near them, on the <span class="rhyme-target rhyme-highlight-span rhyme-a alt-h alt-1 ass-h ass-1">sand</span>,</span>
+<span class="flex-1"><span class="sense-h sense-2"><span class="alt-h alt-1">Stand</span> in the desert.</span> <span class="sense-h sense-3">Near them, on the <span class="rhyme-target rhyme-highlight-span rhyme-a alt-h alt-1 ass-h ass-1">sand</span>,</span></span>
 <span class="line-num">3</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">A</span>
 </div>
 <div class="line-container flex items-baseline" data-line="3">
-<span class="flex-1">Half <span class="alt-h alt-1">sunk</span>, a <span class="alt-h alt-1 ass-h ass-1">shattered</span> visage <span class="ass-h ass-2">lies</span>, whose <span class="rhyme-target rhyme-highlight-span rhyme-b">frown</span>,</span>
+<span class="flex-1"><span class="sense-h sense-3">Half <span class="alt-h alt-1">sunk</span>, a <span class="alt-h alt-1 ass-h ass-1">shattered</span> visage <span class="ass-h ass-2">lies</span>,</span> <span class="sense-h sense-4">whose <span class="rhyme-target rhyme-highlight-span rhyme-b">frown</span>,</span></span>
 <span class="line-num">4</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">B</span>
 </div>
 <div class="line-container flex items-baseline" data-line="4">
-<span class="flex-1">And <span class="alt-h alt-8">wrinkled</span> lip, and <span class="ass-h ass-3">sneer</span> of <span class="alt-h alt-3 ass-h ass-4">cold</span> <span class="rhyme-target rhyme-highlight-span rhyme-a alt-h alt-3 ass-h ass-1">command</span>,</span>
+<span class="flex-1"><span class="sense-h sense-4">And <span class="alt-h alt-8">wrinkled</span> lip, and <span class="ass-h ass-3">sneer</span> of <span class="alt-h alt-3 ass-h ass-4">cold</span> <span class="rhyme-target rhyme-highlight-span rhyme-a alt-h alt-3 ass-h ass-1">command</span>,</span></span>
 <span class="line-num">5</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">A</span>
 </div>
 <div class="line-container flex items-baseline" data-line="5">
-<span class="flex-1">Tell that its <span class="alt-h alt-4">sculptor</span> well those <span class="ass-h ass-1">passions</span> <span class="rhyme-target rhyme-highlight-span rhyme-c alt-h alt-8 ass-h ass-3">read</span></span>
+<span class="flex-1"><span class="sense-h sense-5">Tell that its <span class="alt-h alt-4">sculptor</span> well those <span class="ass-h ass-1">passions</span> <span class="rhyme-target rhyme-highlight-span rhyme-c alt-h alt-8 ass-h ass-3">read</span></span></span>
 <span class="line-num">6</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">C</span>
 </div>
 <div class="line-container flex items-baseline" data-line="6">
-<span class="flex-1">Which yet <span class="alt-h alt-4 ass-h ass-2">survive</span>, <span class="alt-h alt-4 ass-h ass-1">stamped</span> on <span class="ass-h ass-3">these</span> <span class="ass-h ass-2">lifeless</span> <span class="rhyme-target rhyme-highlight-span rhyme-d">things</span>,</span>
+<span class="flex-1"><span class="sense-h sense-5">Which yet <span class="alt-h alt-4 ass-h ass-2">survive</span>, <span class="alt-h alt-4 ass-h ass-1">stamped</span> on <span class="ass-h ass-3">these</span> <span class="ass-h ass-2">lifeless</span> <span class="rhyme-target rhyme-highlight-span rhyme-d">things</span>,</span></span>
 <span class="line-num">7</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">D</span>
 </div>
 <div class="line-container flex items-baseline" data-line="7">
-<span class="flex-1">The <span class="alt-h alt-5 ass-h ass-1">hand</span> that mocked them, and the <span class="alt-h alt-5">heart</span> that <span class="rhyme-target rhyme-highlight-span rhyme-c">fed</span>;</span>
+<span class="flex-1"><span class="sense-h sense-5">The <span class="alt-h alt-5 ass-h ass-1">hand</span> that mocked them, and the <span class="alt-h alt-5">heart</span> that <span class="rhyme-target rhyme-highlight-span rhyme-c">fed</span>;</span></span>
 <span class="line-num">8</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">C</span>
 </div>
 <div class="line-container flex items-baseline" data-line="8">
-<span class="flex-1">And on the pedestal, <span class="ass-h ass-3">these</span> <span class="alt-h alt-13">words</span> <span class="rhyme-target rhyme-highlight-span rhyme-e ass-h ass-3">appear</span>:</span>
+<span class="flex-1"><span class="sense-h sense-6">And on the pedestal, <span class="ass-h ass-3">these</span> <span class="alt-h alt-13">words</span> <span class="rhyme-target rhyme-highlight-span rhyme-e ass-h ass-3">appear</span>:</span></span>
 <span class="line-num">9</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">E</span>
 </div>
 <div class="line-container flex items-baseline italic text-on-surface" data-line="9">
-<span class="flex-1 pl-4 md:pl-8 lg:pl-12 border-l border-primary/20">‘<span class="alt-h alt-6">My</span> name is Ozymandias, <span class="alt-h alt-12">King</span> of <span class="rhyme-target rhyme-highlight-span rhyme-d alt-h alt-12">Kings</span>;</span>
+<span class="flex-1 pl-4 md:pl-8 lg:pl-12 border-l border-primary/20"><span class="sense-h sense-7">‘<span class="alt-h alt-6">My</span> name is Ozymandias, <span class="alt-h alt-12">King</span> of <span class="rhyme-target rhyme-highlight-span rhyme-d alt-h alt-12">Kings</span>;</span></span>
 <span class="line-num">10</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">D</span>
 </div>
 <div class="line-container flex items-baseline italic text-on-surface" data-line="10">
-<span class="flex-1 pl-4 md:pl-8 lg:pl-12 border-l border-primary/20">Look on my <span class="alt-h alt-13">Works</span>, ye <span class="alt-h alt-6 ass-h ass-2">Mighty</span>, and <span class="rhyme-target rhyme-highlight-span rhyme-e">despair</span>!’</span>
+<span class="flex-1 pl-4 md:pl-8 lg:pl-12 border-l border-primary/20"><span class="sense-h sense-7">Look on my <span class="alt-h alt-13">Works</span>, ye <span class="alt-h alt-6 ass-h ass-2">Mighty</span>, and <span class="rhyme-target rhyme-highlight-span rhyme-e">despair</span>!’</span></span>
 <span class="line-num">11</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">E</span>
 </div>
 <div class="line-container flex items-baseline pt-4 lg:pt-8" data-line="11">
-<span class="flex-1">Nothing <span class="alt-h alt-7 ass-h ass-2">beside</span> <span class="alt-h alt-8">remains</span>. <span class="alt-h alt-8">Round</span> the <span class="rhyme-target rhyme-highlight-span rhyme-f ass-h ass-5">decay</span></span>
+<span class="flex-1"><span class="sense-h sense-8">Nothing <span class="alt-h alt-7 ass-h ass-2">beside</span> <span class="alt-h alt-8">remains</span>.</span> <span class="sense-h sense-9"><span class="alt-h alt-8">Round</span> the <span class="rhyme-target rhyme-highlight-span rhyme-f ass-h ass-5">decay</span></span></span>
 <span class="line-num">12</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">F</span>
 </div>
 <div class="line-container flex items-baseline" data-line="12">
-<span class="flex-1">Of that colossal <span class="alt-h alt-8">Wreck</span>, <span class="alt-h alt-7">boundless</span> and <span class="alt-h alt-7 rhyme-target rhyme-highlight-span rhyme-e">bare</span></span>
+<span class="flex-1"><span class="sense-h sense-9">Of that colossal <span class="alt-h alt-8">Wreck</span>, <span class="alt-h alt-7">boundless</span> and <span class="alt-h alt-7 rhyme-target rhyme-highlight-span rhyme-e">bare</span></span></span>
 <span class="line-num">13</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">E</span>
 </div>
 <div class="line-container flex items-baseline" data-line="13">
-<span class="flex-1">The <span class="alt-h alt-9 ass-h ass-4">lone</span> and <span class="alt-h alt-9">level</span> <span class="alt-h alt-10 ass-h ass-1">sands</span> <span class="alt-h alt-10">stretch</span> far <span class="rhyme-target rhyme-highlight-span rhyme-f ass-h ass-5">away</span>.”</span>
+<span class="flex-1"><span class="sense-h sense-9">The <span class="alt-h alt-9 ass-h ass-4">lone</span> and <span class="alt-h alt-9">level</span> <span class="alt-h alt-10 ass-h ass-1">sands</span> <span class="alt-h alt-10">stretch</span> far <span class="rhyme-target rhyme-highlight-span rhyme-f ass-h ass-5">away</span>.”</span></span>
 <span class="line-num">14</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">F</span>
 </div>
@@ -372,6 +396,21 @@
             el.addEventListener('mouseleave', () => {
                 mainContainer.classList.remove('ass-hovering');
                 document.querySelectorAll('.ass-active').forEach(p => p.classList.remove('ass-active'));
+            });
+        });
+
+        // Hover-to-Sync: dim all non-active sense highlights on hover
+        document.querySelectorAll('.sense-h').forEach(el => {
+            const group = Array.from(el.classList).find(c => c.startsWith('sense-') && c !== 'sense-h');
+            if (!group) return;
+            el.addEventListener('mouseenter', () => {
+                if (mainContainer.getAttribute('data-view') !== 'sense') return;
+                mainContainer.classList.add('sense-hovering');
+                document.querySelectorAll('.' + group).forEach(p => p.classList.add('sense-active'));
+            });
+            el.addEventListener('mouseleave', () => {
+                mainContainer.classList.remove('sense-hovering');
+                document.querySelectorAll('.sense-active').forEach(p => p.classList.remove('sense-active'));
             });
         });
 
