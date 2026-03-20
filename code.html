@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ozymandias | The Desert Archive</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary": "#6b5e10",
+                        "primary-container": "#bfe2e1",
+                        "outline": "#7c7767",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#abcdcd",
+                        "on-primary-fixed": "#002020",
+                        "on-primary-fixed-variant": "#2c4c4c",
+                        "on-surface": "#1b1d0e",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#dbdcc3",
+                        "surface-variant": "#e4e4cc",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "secondary-container": "#e0dfdf",
+                        "on-primary-container": "#456665",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#eaead1",
+                        "surface-container": "#efefd7",
+                        "on-background": "#1b1d0e",
+                        "primary-fixed-dim": "#abcdcd",
+                        "secondary-fixed": "#e3e2e2",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#6d6012",
+                        "primary-fixed": "#c6e9e9",
+                        "inverse-surface": "#303221",
+                        "inverse-on-surface": "#f2f2d9",
+                        "on-secondary-fixed-variant": "#464747",
+                        "on-tertiary-fixed-variant": "#514700",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#d8c76f",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "tertiary-fixed": "#f5e388",
+                        "error": "#ba1a1a",
+                        "background": "#fdfcf0",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#211b00",
+                        "surface-tint": "#446464",
+                        "surface-container-low": "#f5f5dc",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#fdfcf0",
+                        "surface-container-highest": "#e4e4cc",
+                        "tertiary-container": "#eedc82",
+                        "on-surface-variant": "#4a4738",
+                        "on-secondary-container": "#626363",
+                        "outline-variant": "#cdc6b3",
+                        "surface": "#fdfcf0",
+                        "secondary": "#5e5e5f",
+                        "primary": "#446464"
+                    },
+                    fontFamily: {
+                        "headline": ["Newsreader"],
+                        "body": ["Newsreader"],
+                        "label": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+        }
+        body {
+            background-color: #fdfcf0;
+        }
+        .line-container {
+            position: relative;
+            white-space: nowrap;
+        }
+        .rhyme-marker {
+            position: absolute;
+            left: 100%;
+            margin-left: 1rem;
+            opacity: 0;
+            transform: translateX(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        [data-view="rhyme"] .rhyme-marker {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Alliteration Highlight Base */
+        .alt-h {
+            transition: background-color 0.4s ease, color 0.4s ease;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+
+        /* High Contrast Alliteration Groups */
+        [data-view="alliteration"] .alt-1 { background-color: #FF7043; color: white; } /* S cluster: stone/stand/sand/sunk/shattered */
+        [data-view="alliteration"] .alt-2 { background-color: #26A69A; color: white; } /* T: Two/trunkless */
+        [data-view="alliteration"] .alt-3 { background-color: #5C6BC0; color: white; } /* C: cold/command */
+        [data-view="alliteration"] .alt-4 { background-color: #AB47BC; color: white; } /* S cluster 2: sculptor/survive/stamped */
+        [data-view="alliteration"] .alt-5 { background-color: #EC407A; color: white; } /* H: hand/heart */
+        [data-view="alliteration"] .alt-6 { background-color: #FFA726; color: black; } /* M: My/Mighty */
+        [data-view="alliteration"] .alt-7 { background-color: #66BB6A; color: white; } /* B: beside/boundless/bare */
+        [data-view="alliteration"] .alt-8 { background-color: #8D6E63; color: white; } /* R: remains/Round/Wreck */
+        [data-view="alliteration"] .alt-9 { background-color: #29B6F6; color: black; } /* L: lone/level */
+        [data-view="alliteration"] .alt-10 { background-color: #FFEE58; color: black; } /* S cluster 3: sands/stretch */
+
+        /* Rhyme Highlights */
+        .rhyme-highlight-span {
+            transition: background-color 0.3s ease;
+            padding: 0 4px;
+            border-radius: 2px;
+        }
+        [data-view="rhyme"] .rhyme-a { background-color: rgba(191, 226, 225, 0.7); }
+        [data-view="rhyme"] .rhyme-b { background-color: rgba(238, 220, 130, 0.6); }
+        [data-view="rhyme"] .rhyme-c { background-color: rgba(205, 198, 179, 0.7); }
+        [data-view="rhyme"] .rhyme-d { background-color: rgba(107, 94, 16, 0.3); }
+        [data-view="rhyme"] .rhyme-e { background-color: rgba(68, 100, 100, 0.3); }
+        [data-view="rhyme"] .rhyme-f { background-color: rgba(186, 26, 26, 0.25); }
+
+        .transition-all {
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 300ms;
+        }
+
+        @media (max-width: 1023px) {
+            .line-container {
+                white-space: normal;
+            }
+            .rhyme-marker {
+                position: relative;
+                left: 0;
+                margin-left: 0.5rem;
+                display: inline-block;
+            }
+        }
+    </style>
+</head>
+<body class="font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen">
+<div class="flex flex-col lg:flex-row min-h-screen relative" data-view="default" id="main-container">
+<!-- Sidebar / Top Nav -->
+<aside class="bg-surface lg:bg-transparent lg:fixed left-0 top-0 lg:h-full w-full lg:w-64 z-40 border-b lg:border-r border-outline-variant/10">
+<div class="flex flex-col p-4 lg:p-8 gap-6 h-full lg:pt-24">
+<div class="lg:hidden flex items-center justify-between mb-4">
+<span class="font-label text-[0.65rem] uppercase tracking-widest text-outline">Archive Menu</span>
+<span class="material-symbols-outlined text-primary">menu_book</span>
+</div>
+<nav class="flex flex-row lg:flex-col overflow-x-auto lg:overflow-visible gap-2 lg:gap-4 pb-2 lg:pb-0">
+<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-2 lg:py-3 bg-[#efefd7]/50 text-[#446464] font-bold border-l-2 lg:border-l-4 border-[#446464] font-sans uppercase tracking-[0.1em] text-[0.65rem] lg:text-[0.75rem] transition-all duration-300" id="btn-default" onclick="setView('default')">
+<span class="material-symbols-outlined text-sm lg:text-base">article</span>
+                        Default
+                    </button>
+<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-2 lg:py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.65rem] lg:text-[0.75rem] transition-all duration-300" id="btn-rhyme" onclick="setView('rhyme')">
+<span class="material-symbols-outlined text-sm lg:text-base">format_quote</span>
+                        Rhyme
+                    </button>
+<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-2 lg:py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.65rem] lg:text-[0.75rem] transition-all duration-300" id="btn-alliteration" onclick="setView('alliteration')">
+<span class="material-symbols-outlined text-sm lg:text-base">auto_awesome</span>
+                        Alliteration
+                    </button>
+</nav>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 lg:ml-64 pt-12 lg:pt-24 pb-32 px-4 sm:px-8 md:px-16 lg:px-24 flex justify-center overflow-x-hidden">
+<section class="max-w-4xl w-full">
+<header class="mb-12 lg:mb-16 text-center lg:text-left">
+<span class="font-label text-[0.7rem] lg:text-[0.75rem] uppercase tracking-[0.2em] text-outline mb-3 lg:mb-4 block">Percy Bysshe Shelley, 1818</span>
+<h1 class="font-headline text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light italic -ml-1 tracking-tight mb-4 text-on-surface">Ozymandias</h1>
+<div class="w-16 h-px bg-primary opacity-30 mx-auto lg:ml-0 mb-8"></div>
+</header>
+<article class="relative">
+<div class="space-y-4 sm:space-y-6 md:space-y-8 font-headline text-xl sm:text-2xl md:text-3xl lg:text-[2.25rem] leading-[1.3] lg:leading-[1.4] text-on-surface-variant">
+<div class="line-container flex items-baseline" data-line="0">
+<span class="flex-1">I met a traveller from an antique <span class="rhyme-target">land</span>,</span>
+<span class="rhyme-marker font-label text-sm text-tertiary font-bold">A</span>
+</div>
+<div class="line-container flex items-baseline" data-line="1">
+<span class="flex-1">Who said—“<span class="alt-h alt-2">Two</span> vast and <span class="alt-h alt-2">trunkless</span> legs of <span class="rhyme-target alt-h alt-1">stone</span></span>
+<span class="rhyme-marker font-label text-sm text-tertiary font-bold">B</span>
+</div>
+<div class="line-container flex items-baseline" data-line="2">
+<span class="flex-1"><span class="alt-h alt-1">Stand</span> in the desert. . . Near them, on the <span class="rhyme-target alt-h alt-1">sand</span>,</span>
+<span class="rhyme-marker font-label text-sm text-tertiary font-bold">A</span>
+</div>
+<div class="line-container flex items-baseline" data-line="3">
+<span class="flex-1">Half <span class="alt-h alt-1">sunk</span> a <span class="alt-h alt-1">shattered</span> visage lies, whose <span class="rhyme-target">frown</span>,</span>
+<span class="rhyme-marker font-label text-sm text-tertiary font-bold">B</span>
+</div>
+<div class="line-container flex items-baseline" data-line="4">
+<span class="flex-1">And wrinkled lip, and sneer of <span class="alt-h alt-3">cold</span> <span class="rhyme-target alt-h alt-3">command</span>,</span>
+<span class="rhyme-marker font-label text-sm text-tertiary font-bold">A</span>
+</div>
+<div class="line-container flex items-baseline" data-line="5">
+<span class="flex-1">Tell that its <span class="alt-h alt-4">sculptor</span> well those passions <span class="rhyme-target">read</span></span>
+<span class="rhyme-marker font-label text-sm text-tertiary font-bold">C</span>
+</div>
+<div class="line-container flex items-baseline" data-line="6">
+<span class="flex-1">Which yet <span class="alt-h alt-4">survive</span>, <span class="alt-h alt-4 rhyme-target">stamped</span> on these lifeless things,</span>
+<span class="rhyme-marker font-label text-sm text-tertiary font-bold">D</span>
+</div>
+<div class="line-container flex items-baseline" data-line="7">
+<span class="flex-1">The <span class="alt-h alt-5">hand</span> that mocked them, and the <span class="alt-h alt-5">heart</span> that <span class="rhyme-target">fed</span>;</span>
+<span class="rhyme-marker font-label text-sm text-tertiary font-bold">C</span>
+</div>
+<div class="line-container flex items-baseline" data-line="8">
+<span class="flex-1">And on the pedestal, these words <span class="rhyme-target">appear</span>:</span>
+<span class="rhyme-marker font-label text-sm text-tertiary font-bold">E</span>
+</div>
+<div class="line-container flex items-baseline italic text-on-surface" data-line="9">
+<span class="flex-1 pl-4 md:pl-8 lg:pl-12 border-l border-primary/20"><span class="alt-h alt-6">My</span> name is Ozymandias, King of <span class="rhyme-target alt-h alt-10">Kings</span>;</span>
+<span class="rhyme-marker font-label text-sm text-tertiary font-bold">F</span>
+</div>
+<div class="line-container flex items-baseline italic text-on-surface" data-line="10">
+<span class="flex-1 pl-4 md:pl-8 lg:pl-12 border-l border-primary/20">Look on my Works, ye <span class="alt-h alt-6">Mighty</span>, and <span class="rhyme-target">despair</span>!</span>
+<span class="rhyme-marker font-label text-sm text-tertiary font-bold">E</span>
+</div>
+<div class="line-container flex items-baseline pt-4 lg:pt-8" data-line="11">
+<span class="flex-1">Nothing <span class="alt-h alt-7">beside</span> <span class="alt-h alt-8">remains</span>. <span class="alt-h alt-8">Round</span> the <span class="rhyme-target">decay</span></span>
+<span class="rhyme-marker font-label text-sm text-tertiary font-bold">F</span>
+</div>
+<div class="line-container flex items-baseline" data-line="12">
+<span class="flex-1">Of that colossal <span class="alt-h alt-8">Wreck</span>, <span class="alt-h alt-7">boundless</span> and <span class="alt-h alt-7 rhyme-target">bare</span></span>
+<span class="rhyme-marker font-label text-sm text-tertiary font-bold">E</span>
+</div>
+<div class="line-container flex items-baseline" data-line="13">
+<span class="flex-1">The <span class="alt-h alt-9">lone</span> and <span class="alt-h alt-9">level</span> <span class="alt-h alt-10">sands</span> <span class="alt-h alt-10 rhyme-target">stretch</span> far away.</span>
+<span class="rhyme-marker font-label text-sm text-tertiary font-bold">F</span>
+</div>
+</div>
+</article>
+</section>
+</main>
+</div>
+<script>
+        function setView(viewName) {
+            const container = document.getElementById('main-container');
+            container.setAttribute('data-view', viewName);
+
+            // Update Nav Button Styles
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-[#efefd7]/50', 'text-[#446464]', 'font-bold', 'border-l-2', 'lg:border-l-4', 'border-[#446464]');
+                btn.classList.add('text-[#4a4738]');
+            });
+
+            const activeBtn = document.getElementById('btn-' + viewName);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-[#4a4738]');
+                activeBtn.classList.add('bg-[#efefd7]/50', 'text-[#446464]', 'font-bold', 'border-l-2', 'lg:border-l-4', 'border-[#446464]');
+            }
+
+            // Reset Rhyme Highlights only (alliteration is CSS-based via data-view)
+            const lines = document.querySelectorAll('.line-container');
+            lines.forEach(line => {
+                const target = line.querySelector('.rhyme-target');
+                if (target) {
+                    // Remove all rhyme-specific classes but keep the original ones
+                    const originalClasses = Array.from(target.classList).filter(c => !c.startsWith('rhyme-') || c === 'rhyme-target');
+                    target.className = originalClasses.join(' ');
+                }
+            });
+
+            if (viewName === 'rhyme') {
+                // Corrected Rhyme Scheme Mapping:
+                // ABAB ACDC EFEF (as per standard Ozymandias sonnet structure)
+                const rhymeMap = {
+                    0: 'rhyme-a', 2: 'rhyme-a', 4: 'rhyme-a',
+                    1: 'rhyme-b', 3: 'rhyme-b',
+                    5: 'rhyme-c', 7: 'rhyme-c',
+                    6: 'rhyme-d', 
+                    8: 'rhyme-e', 10: 'rhyme-e', 12: 'rhyme-e',
+                    9: 'rhyme-f', 11: 'rhyme-f', 13: 'rhyme-f'
+                };
+
+                Object.entries(rhymeMap).forEach(([idx, className]) => {
+                    const line = lines[idx];
+                    if (line) {
+                        const target = line.querySelector('.rhyme-target');
+                        if (target) {
+                            target.classList.add('rhyme-highlight-span', className);
+                        }
+                    }
+                });
+            }
+        }
+
+        // Initialize View
+        setView('default');
+    </script>
+</body></html>
