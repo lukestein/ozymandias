@@ -209,28 +209,59 @@
 <body class="font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen">
 <div class="flex flex-col lg:flex-row min-h-screen relative" data-view="default" id="main-container">
 <!-- Sidebar / Top Nav -->
-<aside class="bg-surface lg:bg-transparent lg:fixed left-0 top-0 lg:h-full w-full lg:w-64 z-40 border-b lg:border-r border-outline-variant/10">
+<aside class="sticky top-0 bg-surface/95 backdrop-blur-sm lg:bg-transparent lg:backdrop-blur-0 lg:fixed left-0 lg:top-0 lg:h-full w-full lg:w-64 z-40 border-b lg:border-r border-outline-variant/10">
 <div class="flex flex-col p-4 lg:p-8 gap-6 h-full lg:pt-24">
-<nav class="flex flex-row lg:flex-col overflow-x-auto lg:overflow-visible gap-2 lg:gap-4 pb-2 lg:pb-0">
-<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-2 lg:py-3 bg-[#efefd7]/50 text-[#446464] font-bold border-l-2 lg:border-l-4 border-[#446464] font-sans uppercase tracking-[0.1em] text-[0.65rem] lg:text-[0.75rem] transition-all duration-300" id="btn-default" onclick="setView('default')">
+<div class="relative lg:hidden" id="mobile-mode-picker">
+<button aria-controls="mobile-mode-menu" aria-expanded="false" class="w-full flex items-center justify-between gap-4 rounded-lg border border-outline-variant/20 bg-[#efefd7]/40 px-4 py-3 text-left transition-all duration-300" id="mobile-mode-button" onclick="toggleMobileMenu()">
+<span class="flex min-w-0 items-center gap-3">
+<span class="material-symbols-outlined text-base text-[#446464]" id="mobile-mode-icon">article</span>
+<span class="block min-w-0 truncate font-label text-[0.8rem] uppercase tracking-[0.1em] text-[#446464]" id="mobile-mode-label">Default</span>
+</span>
+<span class="material-symbols-outlined text-base text-[#4a4738]" id="mobile-mode-chevron">expand_more</span>
+</button>
+<nav class="absolute left-0 right-0 top-full mt-2 hidden flex-col gap-2 rounded-lg border border-outline-variant/20 bg-surface/95 p-2 shadow-lg backdrop-blur-sm" id="mobile-mode-menu">
+<button class="nav-btn mobile-nav-btn flex items-center gap-3 rounded-md px-4 py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.7rem] transition-all duration-300" data-icon="article" data-label="Default" data-view-target="default" onclick="setView('default')">
 <span class="material-symbols-outlined text-sm lg:text-base">article</span>
                         Default
                     </button>
-<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-2 lg:py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.65rem] lg:text-[0.75rem] transition-all duration-300" id="btn-rhyme" onclick="setView('rhyme')">
+<button class="nav-btn mobile-nav-btn flex items-center gap-3 rounded-md px-4 py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.7rem] transition-all duration-300" data-icon="visibility" data-label="Sense" data-view-target="sense" onclick="setView('sense')">
+<span class="material-symbols-outlined text-sm lg:text-base">visibility</span>
+                        Sense
+                    </button>
+<button class="nav-btn mobile-nav-btn flex items-center gap-3 rounded-md px-4 py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.7rem] transition-all duration-300" data-icon="format_quote" data-label="Rhyme" data-view-target="rhyme" onclick="setView('rhyme')">
 <span class="material-symbols-outlined text-sm lg:text-base">format_quote</span>
                         Rhyme
                     </button>
-<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-2 lg:py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.65rem] lg:text-[0.75rem] transition-all duration-300" id="btn-alliteration" onclick="setView('alliteration')">
+<button class="nav-btn mobile-nav-btn flex items-center gap-3 rounded-md px-4 py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.7rem] transition-all duration-300" data-icon="auto_awesome" data-label="Alliteration" data-view-target="alliteration" onclick="setView('alliteration')">
 <span class="material-symbols-outlined text-sm lg:text-base">auto_awesome</span>
                         Alliteration
                     </button>
-<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-2 lg:py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.65rem] lg:text-[0.75rem] transition-all duration-300" id="btn-assonance" onclick="setView('assonance')">
+<button class="nav-btn mobile-nav-btn flex items-center gap-3 rounded-md px-4 py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.7rem] transition-all duration-300" data-icon="graphic_eq" data-label="Assonance" data-view-target="assonance" onclick="setView('assonance')">
 <span class="material-symbols-outlined text-sm lg:text-base">graphic_eq</span>
                         Assonance
                     </button>
-<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-2 lg:py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.65rem] lg:text-[0.75rem] transition-all duration-300" id="btn-sense" onclick="setView('sense')">
+    </nav>
+</div>
+<nav class="hidden lg:flex lg:flex-col lg:overflow-visible gap-4">
+<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-3 bg-[#efefd7]/50 text-[#446464] font-bold border-l-4 border-[#446464] font-sans uppercase tracking-[0.1em] text-[0.75rem] transition-all duration-300" data-icon="article" data-label="Default" data-view-target="default" onclick="setView('default')">
+<span class="material-symbols-outlined text-base">article</span>
+                        Default
+                    </button>
+<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.75rem] transition-all duration-300" data-icon="visibility" data-label="Sense" data-view-target="sense" onclick="setView('sense')">
 <span class="material-symbols-outlined text-sm lg:text-base">visibility</span>
                         Sense
+                    </button>
+<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.75rem] transition-all duration-300" data-icon="format_quote" data-label="Rhyme" data-view-target="rhyme" onclick="setView('rhyme')">
+<span class="material-symbols-outlined text-base">format_quote</span>
+                        Rhyme
+                    </button>
+<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.75rem] transition-all duration-300" data-icon="auto_awesome" data-label="Alliteration" data-view-target="alliteration" onclick="setView('alliteration')">
+<span class="material-symbols-outlined text-base">auto_awesome</span>
+                        Alliteration
+                    </button>
+<button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-3 text-[#4a4738] hover:bg-[#e4e4cc]/30 font-sans uppercase tracking-[0.1em] text-[0.75rem] transition-all duration-300" data-icon="graphic_eq" data-label="Assonance" data-view-target="assonance" onclick="setView('assonance')">
+<span class="material-symbols-outlined text-base">graphic_eq</span>
+                        Assonance
                     </button>
 </nav>
 </div>
@@ -321,6 +352,26 @@
 </main>
 </div>
 <script>
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-mode-menu');
+            const button = document.getElementById('mobile-mode-button');
+            const chevron = document.getElementById('mobile-mode-chevron');
+            if (!menu || !button || !chevron) return;
+            menu.classList.add('hidden');
+            button.setAttribute('aria-expanded', 'false');
+            chevron.textContent = 'expand_more';
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-mode-menu');
+            const button = document.getElementById('mobile-mode-button');
+            const chevron = document.getElementById('mobile-mode-chevron');
+            if (!menu || !button || !chevron) return;
+            const isHidden = menu.classList.toggle('hidden');
+            button.setAttribute('aria-expanded', String(!isHidden));
+            chevron.textContent = isHidden ? 'expand_more' : 'expand_less';
+        }
+
         function setView(viewName) {
             const container = document.getElementById('main-container');
             container.setAttribute('data-view', viewName);
@@ -328,15 +379,25 @@
             // Update Nav Button Styles
             const buttons = document.querySelectorAll('.nav-btn');
             buttons.forEach(btn => {
-                btn.classList.remove('bg-[#efefd7]/50', 'text-[#446464]', 'font-bold', 'border-l-2', 'lg:border-l-4', 'border-[#446464]');
+                btn.classList.remove('bg-[#efefd7]/50', 'text-[#446464]', 'font-bold', 'border-l-2', 'lg:border-l-4', 'border-l-4', 'border-[#446464]');
                 btn.classList.add('text-[#4a4738]');
             });
 
-            const activeBtn = document.getElementById('btn-' + viewName);
-            if (activeBtn) {
+            const activeButtons = document.querySelectorAll('[data-view-target="' + viewName + '"]');
+            activeButtons.forEach(activeBtn => {
                 activeBtn.classList.remove('text-[#4a4738]');
                 activeBtn.classList.add('bg-[#efefd7]/50', 'text-[#446464]', 'font-bold', 'border-l-2', 'lg:border-l-4', 'border-[#446464]');
+            });
+
+            const mobileActiveBtn = document.querySelector('.mobile-nav-btn[data-view-target="' + viewName + '"]');
+            const mobileLabel = document.getElementById('mobile-mode-label');
+            const mobileIcon = document.getElementById('mobile-mode-icon');
+            if (mobileActiveBtn && mobileLabel && mobileIcon) {
+                mobileLabel.textContent = mobileActiveBtn.dataset.label || '';
+                mobileIcon.textContent = mobileActiveBtn.dataset.icon || 'article';
             }
+
+            closeMobileMenu();
 
         }
 
@@ -412,6 +473,12 @@
                 mainContainer.classList.remove('sense-hovering');
                 document.querySelectorAll('.sense-active').forEach(p => p.classList.remove('sense-active'));
             });
+        });
+
+        document.addEventListener('click', event => {
+            const picker = document.getElementById('mobile-mode-picker');
+            if (!picker || picker.contains(event.target)) return;
+            closeMobileMenu();
         });
 
         // Initialize View
