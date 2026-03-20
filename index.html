@@ -3,7 +3,7 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Ozymandias | The Desert Archive</title>
+<title>Ozymandias</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -86,20 +86,13 @@
             position: absolute;
             left: 100%;
             margin-left: 1rem;
-            opacity: 0;
-            transform: translateX(10px);
-            transition: all 0.3s ease;
             pointer-events: none;
-        }
-        [data-view="rhyme"] .rhyme-marker {
-            opacity: 1;
-            transform: translateX(0);
         }
         
         /* Alliteration Highlight Base */
         .alt-h {
-            transition: background-color 0.4s ease, color 0.4s ease;
-            padding: 0 2px;
+            transition: background-color 0.4s ease, color 0.4s ease, filter 0.2s ease, transform 0.2s ease;
+            padding: 0.15em 3px;
             border-radius: 2px;
         }
 
@@ -111,27 +104,58 @@
         [data-view="alliteration"] .alt-5 { background-color: #EC407A; color: white; } /* H: hand/heart */
         [data-view="alliteration"] .alt-6 { background-color: #FFA726; color: black; } /* M: My/Mighty */
         [data-view="alliteration"] .alt-7 { background-color: #66BB6A; color: white; } /* B: beside/boundless/bare */
-        [data-view="alliteration"] .alt-8 { background-color: #8D6E63; color: white; } /* R: remains/Round/Wreck */
+        [data-view="alliteration"] .alt-8 { background-color: #8D6E63; color: white; } /* R: wrinkled/read/remains/Round/Wreck */
         [data-view="alliteration"] .alt-9 { background-color: #29B6F6; color: black; } /* L: lone/level */
         [data-view="alliteration"] .alt-10 { background-color: #FFEE58; color: black; } /* S cluster 3: sands/stretch */
+        [data-view="alliteration"] .alt-12 { background-color: #AD1457; color: white; } /* K: King/Kings */
+        [data-view="alliteration"] .alt-13 { background-color: #0277BD; color: white; } /* W: words/Works */
 
         /* Rhyme Highlights */
         .rhyme-highlight-span {
-            transition: background-color 0.3s ease;
-            padding: 0 4px;
+            transition: background-color 0.3s ease, filter 0.2s ease, transform 0.2s ease;
+            padding: 0.15em 5px;
             border-radius: 2px;
         }
         [data-view="rhyme"] .rhyme-a { background-color: rgba(191, 226, 225, 0.7); }
         [data-view="rhyme"] .rhyme-b { background-color: rgba(238, 220, 130, 0.6); }
-        [data-view="rhyme"] .rhyme-c { background-color: rgba(205, 198, 179, 0.7); }
-        [data-view="rhyme"] .rhyme-d { background-color: rgba(107, 94, 16, 0.3); }
-        [data-view="rhyme"] .rhyme-e { background-color: rgba(68, 100, 100, 0.3); }
-        [data-view="rhyme"] .rhyme-f { background-color: rgba(186, 26, 26, 0.25); }
+        [data-view="rhyme"] .rhyme-c { background-color: rgba(220, 162, 72, 0.48); }  /* amber */
+        [data-view="rhyme"] .rhyme-d { background-color: rgba(172, 130, 200, 0.48); } /* mauve */
+        [data-view="rhyme"] .rhyme-e { background-color: rgba(110, 178, 138, 0.50); } /* sage */
+        [data-view="rhyme"] .rhyme-f { background-color: rgba(186, 26, 26, 0.28); }  /* rose */
 
         .transition-all {
             transition-property: all;
             transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
             transition-duration: 300ms;
+        }
+
+        /* Side Labels: line numbers in default/alliteration, rhyme letters in rhyme view */
+        .rh-num {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            color: rgba(74, 71, 56, 0.3);
+            font-weight: 400;
+        }
+        .rh-letter {
+            display: none;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.75rem;
+            color: #6b5e10;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+        [data-view="rhyme"] .rh-num { display: none; }
+        [data-view="rhyme"] .rh-letter { display: inline; }
+
+        /* Hover Sync — dim non-active highlights */
+        [data-view="alliteration"].alt-hovering .alt-h:not(.alt-active) {
+            opacity: 0.2;
+            transition: opacity 0.2s ease;
+        }
+        [data-view="rhyme"].rhyme-hovering .rhyme-highlight-span:not(.rhyme-active) {
+            opacity: 0.25;
+            transition: opacity 0.2s ease;
         }
 
         @media (max-width: 1023px) {
@@ -152,10 +176,6 @@
 <!-- Sidebar / Top Nav -->
 <aside class="bg-surface lg:bg-transparent lg:fixed left-0 top-0 lg:h-full w-full lg:w-64 z-40 border-b lg:border-r border-outline-variant/10">
 <div class="flex flex-col p-4 lg:p-8 gap-6 h-full lg:pt-24">
-<div class="lg:hidden flex items-center justify-between mb-4">
-<span class="font-label text-[0.65rem] uppercase tracking-widest text-outline">Archive Menu</span>
-<span class="material-symbols-outlined text-primary">menu_book</span>
-</div>
 <nav class="flex flex-row lg:flex-col overflow-x-auto lg:overflow-visible gap-2 lg:gap-4 pb-2 lg:pb-0">
 <button class="nav-btn flex items-center shrink-0 gap-3 px-4 py-2 lg:py-3 bg-[#efefd7]/50 text-[#446464] font-bold border-l-2 lg:border-l-4 border-[#446464] font-sans uppercase tracking-[0.1em] text-[0.65rem] lg:text-[0.75rem] transition-all duration-300" id="btn-default" onclick="setView('default')">
 <span class="material-symbols-outlined text-sm lg:text-base">article</span>
@@ -184,58 +204,72 @@
 <div class="space-y-4 sm:space-y-6 md:space-y-8 font-headline text-xl sm:text-2xl md:text-3xl lg:text-[2.25rem] leading-[1.3] lg:leading-[1.4] text-on-surface-variant">
 <div class="line-container flex items-baseline" data-line="0">
 <span class="flex-1">I met a traveller from an antique <span class="rhyme-target">land</span>,</span>
+<span class="line-num">1</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">A</span>
 </div>
 <div class="line-container flex items-baseline" data-line="1">
 <span class="flex-1">Who said—“<span class="alt-h alt-2">Two</span> vast and <span class="alt-h alt-2">trunkless</span> legs of <span class="rhyme-target alt-h alt-1">stone</span></span>
+<span class="line-num">2</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">B</span>
 </div>
 <div class="line-container flex items-baseline" data-line="2">
-<span class="flex-1"><span class="alt-h alt-1">Stand</span> in the desert. . . Near them, on the <span class="rhyme-target alt-h alt-1">sand</span>,</span>
+<span class="flex-1"><span class="alt-h alt-1">Stand</span> in the desert. Near them, on the <span class="rhyme-target alt-h alt-1">sand</span>,</span>
+<span class="line-num">3</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">A</span>
 </div>
 <div class="line-container flex items-baseline" data-line="3">
-<span class="flex-1">Half <span class="alt-h alt-1">sunk</span> a <span class="alt-h alt-1">shattered</span> visage lies, whose <span class="rhyme-target">frown</span>,</span>
+<span class="flex-1">Half <span class="alt-h alt-1">sunk</span>, a <span class="alt-h alt-1">shattered</span> visage lies, whose <span class="rhyme-target">frown</span>,</span>
+<span class="line-num">4</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">B</span>
 </div>
 <div class="line-container flex items-baseline" data-line="4">
-<span class="flex-1">And wrinkled lip, and sneer of <span class="alt-h alt-3">cold</span> <span class="rhyme-target alt-h alt-3">command</span>,</span>
+<span class="flex-1">And <span class="alt-h alt-8">wrinkled</span> lip, and sneer of <span class="alt-h alt-3">cold</span> <span class="rhyme-target alt-h alt-3">command</span>,</span>
+<span class="line-num">5</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">A</span>
 </div>
 <div class="line-container flex items-baseline" data-line="5">
-<span class="flex-1">Tell that its <span class="alt-h alt-4">sculptor</span> well those passions <span class="rhyme-target">read</span></span>
+<span class="flex-1">Tell that its <span class="alt-h alt-4">sculptor</span> well those passions <span class="rhyme-target alt-h alt-8">read</span></span>
+<span class="line-num">6</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">C</span>
 </div>
 <div class="line-container flex items-baseline" data-line="6">
-<span class="flex-1">Which yet <span class="alt-h alt-4">survive</span>, <span class="alt-h alt-4 rhyme-target">stamped</span> on these lifeless things,</span>
+<span class="flex-1">Which yet <span class="alt-h alt-4">survive</span>, <span class="alt-h alt-4">stamped</span> on these lifeless <span class="rhyme-target">things</span>,</span>
+<span class="line-num">7</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">D</span>
 </div>
 <div class="line-container flex items-baseline" data-line="7">
 <span class="flex-1">The <span class="alt-h alt-5">hand</span> that mocked them, and the <span class="alt-h alt-5">heart</span> that <span class="rhyme-target">fed</span>;</span>
+<span class="line-num">8</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">C</span>
 </div>
 <div class="line-container flex items-baseline" data-line="8">
-<span class="flex-1">And on the pedestal, these words <span class="rhyme-target">appear</span>:</span>
+<span class="flex-1">And on the pedestal, these <span class="alt-h alt-13">words</span> <span class="rhyme-target">appear</span>:</span>
+<span class="line-num">9</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">E</span>
 </div>
 <div class="line-container flex items-baseline italic text-on-surface" data-line="9">
-<span class="flex-1 pl-4 md:pl-8 lg:pl-12 border-l border-primary/20"><span class="alt-h alt-6">My</span> name is Ozymandias, King of <span class="rhyme-target alt-h alt-10">Kings</span>;</span>
-<span class="rhyme-marker font-label text-sm text-tertiary font-bold">F</span>
+<span class="flex-1 pl-4 md:pl-8 lg:pl-12 border-l border-primary/20">‘<span class="alt-h alt-6">My</span> name is Ozymandias, <span class="alt-h alt-12">King</span> of <span class="rhyme-target alt-h alt-12">Kings</span>;</span>
+<span class="line-num">10</span>
+<span class="rhyme-marker font-label text-sm text-tertiary font-bold">D</span>
 </div>
 <div class="line-container flex items-baseline italic text-on-surface" data-line="10">
-<span class="flex-1 pl-4 md:pl-8 lg:pl-12 border-l border-primary/20">Look on my Works, ye <span class="alt-h alt-6">Mighty</span>, and <span class="rhyme-target">despair</span>!</span>
+<span class="flex-1 pl-4 md:pl-8 lg:pl-12 border-l border-primary/20">Look on my <span class="alt-h alt-13">Works</span>, ye <span class="alt-h alt-6">Mighty</span>, and <span class="rhyme-target">despair</span>!’</span>
+<span class="line-num">11</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">E</span>
 </div>
 <div class="line-container flex items-baseline pt-4 lg:pt-8" data-line="11">
 <span class="flex-1">Nothing <span class="alt-h alt-7">beside</span> <span class="alt-h alt-8">remains</span>. <span class="alt-h alt-8">Round</span> the <span class="rhyme-target">decay</span></span>
+<span class="line-num">12</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">F</span>
 </div>
 <div class="line-container flex items-baseline" data-line="12">
 <span class="flex-1">Of that colossal <span class="alt-h alt-8">Wreck</span>, <span class="alt-h alt-7">boundless</span> and <span class="alt-h alt-7 rhyme-target">bare</span></span>
+<span class="line-num">13</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">E</span>
 </div>
 <div class="line-container flex items-baseline" data-line="13">
-<span class="flex-1">The <span class="alt-h alt-9">lone</span> and <span class="alt-h alt-9">level</span> <span class="alt-h alt-10">sands</span> <span class="alt-h alt-10 rhyme-target">stretch</span> far away.</span>
+<span class="flex-1">The <span class="alt-h alt-9">lone</span> and <span class="alt-h alt-9">level</span> <span class="alt-h alt-10">sands</span> <span class="alt-h alt-10">stretch</span> far <span class="rhyme-target">away</span>.”</span>
+<span class="line-num">14</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">F</span>
 </div>
 </div>
@@ -279,9 +313,9 @@
                     0: 'rhyme-a', 2: 'rhyme-a', 4: 'rhyme-a',
                     1: 'rhyme-b', 3: 'rhyme-b',
                     5: 'rhyme-c', 7: 'rhyme-c',
-                    6: 'rhyme-d', 
+                    6: 'rhyme-d', 9: 'rhyme-d',
                     8: 'rhyme-e', 10: 'rhyme-e', 12: 'rhyme-e',
-                    9: 'rhyme-f', 11: 'rhyme-f', 13: 'rhyme-f'
+                    11: 'rhyme-f', 13: 'rhyme-f'
                 };
 
                 Object.entries(rhymeMap).forEach(([idx, className]) => {
@@ -295,6 +329,50 @@
                 });
             }
         }
+
+        // Initialize side labels: remove legacy line-num spans, then populate each
+        // rhyme-marker with both a line number (shown by default) and rhyme letter (shown in rhyme view).
+        // This reuses the existing absolutely-positioned .rhyme-marker element which already works correctly.
+        document.querySelectorAll('.line-num').forEach(el => el.remove());
+        document.querySelectorAll('.rhyme-marker').forEach((el, i) => {
+            const letter = el.textContent.trim();
+            el.innerHTML = '<span class="rh-num">' + (i + 1) + '</span>'
+                         + '<span class="rh-letter">' + letter + '</span>';
+        });
+
+        const mainContainer = document.getElementById('main-container');
+
+        // Hover-to-Sync: dim all non-active alliteration highlights on hover
+        document.querySelectorAll('.alt-h').forEach(el => {
+            const group = Array.from(el.classList).find(c => c.startsWith('alt-') && c !== 'alt-h');
+            if (!group) return;
+            el.addEventListener('mouseenter', () => {
+                if (mainContainer.getAttribute('data-view') !== 'alliteration') return;
+                mainContainer.classList.add('alt-hovering');
+                document.querySelectorAll('.' + group).forEach(p => p.classList.add('alt-active'));
+            });
+            el.addEventListener('mouseleave', () => {
+                mainContainer.classList.remove('alt-hovering');
+                document.querySelectorAll('.alt-active').forEach(p => p.classList.remove('alt-active'));
+            });
+        });
+
+        // Hover-to-Sync: dim all non-active rhyme highlights on hover
+        document.querySelectorAll('.rhyme-target').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                if (mainContainer.getAttribute('data-view') !== 'rhyme') return;
+                const group = Array.from(el.classList).find(
+                    c => c.startsWith('rhyme-') && c !== 'rhyme-target' && c !== 'rhyme-highlight-span'
+                );
+                if (!group) return;
+                mainContainer.classList.add('rhyme-hovering');
+                document.querySelectorAll('.' + group).forEach(p => p.classList.add('rhyme-active'));
+            });
+            el.addEventListener('mouseleave', () => {
+                mainContainer.classList.remove('rhyme-hovering');
+                document.querySelectorAll('.rhyme-active').forEach(p => p.classList.remove('rhyme-active'));
+            });
+        });
 
         // Initialize View
         setView('default');

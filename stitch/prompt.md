@@ -1,3 +1,5 @@
+# Stitch
+
 My goal is to design a beautiful single-page site that offers simple visual analysis of the famous poem *Ozymandias* by Shelley. Note that the text of this poem is in the public domain and provided below. The site should display the poem with beautiful typography. There should be clickable buttons or a menu that allows choosing different forms of visual analysis.
 
 For example
@@ -97,4 +99,71 @@ This looks much cleaner. However
 
 ---
 
+# Claude Code
 
+This is an initial website design for visually analyzing the poem ozymandias. The draft in @code.html was created iteratively by Google's Stitch AI tool using feedback i gave in the prompts in @stitch/prompt.md . However, it's still not perfect so I'm hoping you can make some improvements:
+
+1. The rhyme scheme highlighting isn't correct. The highlighted words for each rhyme should be the *last* word of each line and fit the poem's actual rhyme scheme: `ABABACDCEDEFEF`
+2. The alliteration highlights remain incomplete (and perhaps incorrect). Look over them and see what should be improved. Here is some feedback from another agent:
+
+```
+This is looking much tighter. You’ve successfully mapped the "plosive" sounds that give the poem its bite. Aside from that second **"Kings"** (which definitely needs its yellow badge of hubris), there are a few subtle phonetic connections that would make the site feel even more "pro."
+
+* **The "R" Sound Chain (Silent W's):** You’ve smartly grouped **remains**, **Round**, and **Wreck** in brown (since they all share the /r/ sound). To complete this "decay" chain, consider adding **wrinkled** (line 5) and **read** (line 6). It ties the King’s physical aging to the sculptor’s ability to "read" his character.
+* **Vast / Visage:** Highlighting **Vast** (line 2) to match **visage** (line 4) creates a nice "V" frame for the initial description of the statue.
+* **The "W" Sounds:** You have a cluster of /w/ sounds that link the sculptor’s skill to the final result: **well** (line 6), **Which** (line 7), **words** (line 9), and **Works** (line 11). 
+* **The Sibilance (S-Sounds) Hierarchy:** You currently have three different colors for "S" (Orange, Purple, and Yellow for "sands/stretch"). 
+    * *Pro tip:* If the website allows, maybe use one color for the **"Harsh S"** (shattered, sneer, stamped) and another for the **"Soft/Landscape S"** (sand, survive, sands, stretch) to show the shift from the King's personality to the desert's vastness.
+* **Near / Name / Nothing:** The "N" sound creates a bridge from the location (**Near**) to the identity (**name**) and finally to the void (**Nothing**).
+```
+
+---
+
+# Contents
+1. In line 2, "stone" isn't highlighted as part of its rhyme group. Highlight it and check.
+2. We may be slightly overdoing some of the alliteration highlighting. Let's **take out** the highlights on
+  - "Near" / "name" / Nothing"
+  - "visage" (which has no match)
+  - "Well" / "which" (so just keep "words" / "works" in  this set)
+
+# Design
+1. Can we add discrete line numbers on the right (1 through 14) in default and alliteration modes? These can be in the same spot that get replaced with the rhyme scheme letters in rhyme mode
+2. Can we make all the color highlights extend a bit taller beyond the height of the letters being highlighted? They barely touch the ascenders in the top of the tall letters.
+3. ". . ." could be a unicode ellipsis followed by a space
+4. If possible, for the alliteration and rhyming can we add a "Hover to Sync" feature? If a user hovers over a word in an alliteration set all the words in it could glow more intensely. Or overing over one rhyming would highlight the other rhyming lines.
+
+---
+
+1. "stone" in line 2 is totally broken (shows stone2B), no line number or rhyme color or rhyme letter
+2. Hovering over highlights causes some highlights to disapper entirely rather than be more visible as expected (could just be by dimming or turning off all *other* highlights)
+
+---
+
+I found your problem manually: You were using curly quotes in your HTML tags, rather than straight quotes.
+
+---
+
+Please update the capitalization, spelling, and punctuation in the poem to match this quoted version, where the necessary changes are highlighted in bold here (but should not be bold in the web output):
+```
+I met a traveller from an antique **land,**
+Who **said—“**Two vast and trunkless legs of stone
+Stand in the **desert.** Near them, on the sand,
+Half sunk, a shattered visage lies, whose frown,
+And wrinkled lip, and sneer of cold command,
+Tell that its sculptor well those passions read
+Which yet survive, stamped on these lifeless things,
+The hand that mocked **them,** and the heart that **fed;**
+And on the **pedestal,** these words appear:
+“My name is Ozymandias, King of **Kings;**
+Look on my **Works,** ye Mighty, and despair!”
+Nothing beside remains. Round the decay
+Of that colossal **Wreck,** boundless and bare
+The lone and level sands stretch far away.
+```
+
+---
+
+
+Great. I have two remaining design changes:
+1. The colors for the rhyme groups C, D, and E are not sufficiently distinct. Can you tweak the colors while maintaining a cohesive visual theme?
+2. if i make the page narrow (as on a phone), it shows an unnecessary "ARCHIVE MENU" and book icon at the top. Remove them.
