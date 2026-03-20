@@ -206,6 +206,16 @@
                 display: inline-block;
             }
         }
+
+        #sand-waves {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 160px;
+            pointer-events: none;
+            z-index: 0;
+        }
     </style>
 </head>
 <body class="font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container min-h-screen">
@@ -353,6 +363,9 @@
 </section>
 </main>
 </div>
+<footer aria-label="Site attribution" class="fixed bottom-0 left-0 right-0 pb-3 pt-2 flex justify-center z-10 pointer-events-none">
+<p class="font-label text-[0.65rem] uppercase tracking-[0.15em] text-outline/50 text-center pointer-events-auto">Site design: <a class="hover:text-outline/80 transition-colors duration-200" href="https://lukestein.com" rel="noopener noreferrer" target="_blank">Luke Stein</a> w. Google Stitch, Claude Code, OpenAI Codex, Google Gemini, and GitHub Copilot</p>
+</footer>
 <script>
         function closeMobileMenu() {
             const menu = document.getElementById('mobile-mode-menu');
@@ -486,4 +499,73 @@
         // Initialize View
         setView('default');
     </script>
+
+<canvas aria-hidden="true" id="sand-waves"></canvas>
+<script>
+    (function () {
+        var canvas = document.getElementById('sand-waves');
+        if (!canvas) return;
+        var ctx = canvas.getContext('2d');
+        if (!ctx) return;
+        var CANVAS_HEIGHT = 160;
+
+        // Three wave layers: back → front (drawn in order so front overlaps back)
+        var waves = [
+            // back wave: widest, highest position, lightest
+            { amplitude: 22, frequency: 0.0075, speed: 0.00027, phase: 0.0, yFrac: 0.42, r: 215, g: 196, b: 143, a: 1.0 },
+            // middle wave
+            { amplitude: 17, frequency: 0.0105, speed: 0.00018, phase: 2.1, yFrac: 0.60, r: 206, g: 182, b: 122, a: 0.36 },
+            // front wave: narrower crests, lowest position, slightly warmer
+            { amplitude: 13, frequency: 0.0088, speed: 0.00012, phase: 3.8, yFrac: 0.76, r: 224, g: 208, b: 158, a: 0.42 },
+        ];
+
+        var rafId = null;
+        var paused = false;
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = CANVAS_HEIGHT;
+        }
+
+        function drawWave(w, t) {
+            var baseY = CANVAS_HEIGHT * w.yFrac;
+            ctx.beginPath();
+            ctx.moveTo(0, CANVAS_HEIGHT);
+            for (var x = 0; x <= canvas.width; x += 2) {
+                var y = baseY + Math.sin(x * w.frequency + t * w.speed + w.phase) * w.amplitude;
+                ctx.lineTo(x, y);
+            }
+            ctx.lineTo(canvas.width, CANVAS_HEIGHT);
+            ctx.closePath();
+            ctx.fillStyle = 'rgba(' + w.r + ',' + w.g + ',' + w.b + ',' + w.a + ')';
+            ctx.fill();
+        }
+
+        function animate(t) {
+            if (paused) return;
+            ctx.clearRect(0, 0, canvas.width, CANVAS_HEIGHT);
+            for (var i = 0; i < waves.length; i++) {
+                drawWave(waves[i], t);
+            }
+            rafId = requestAnimationFrame(animate);
+        }
+
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) {
+                paused = true;
+                if (rafId !== null) {
+                    cancelAnimationFrame(rafId);
+                    rafId = null;
+                }
+            } else {
+                paused = false;
+                rafId = requestAnimationFrame(animate);
+            }
+        });
+
+        window.addEventListener('resize', resize);
+        resize();
+        rafId = requestAnimationFrame(animate);
+    }());
+</script>
 </body></html>
