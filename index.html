@@ -91,8 +91,8 @@
         
         /* Alliteration Highlight Base */
         .alt-h {
-            transition: background-color 0.4s ease, color 0.4s ease, filter 0.2s ease, transform 0.2s ease;
-            padding: 0.15em 3px;
+            transition: background-color 0.8s ease, color 0.8s ease, filter 0.35s ease, transform 0.35s ease;
+            padding: 0.15em 3px 0.15em 0;
             border-radius: 2px;
         }
 
@@ -112,8 +112,8 @@
 
         /* Rhyme Highlights */
         .rhyme-highlight-span {
-            transition: background-color 0.3s ease, filter 0.2s ease, transform 0.2s ease;
-            padding: 0.15em 5px;
+            transition: background-color 0.8s ease, filter 0.35s ease, transform 0.35s ease;
+            padding: 0.15em 3px 0.15em 0;
             border-radius: 2px;
         }
         [data-view="rhyme"] .rhyme-a { background-color: rgba(191, 226, 225, 0.7); }
@@ -130,32 +130,31 @@
         }
 
         /* Side Labels: line numbers in default/alliteration, rhyme letters in rhyme view */
-        .rh-num {
+        .rh-num, .rh-letter {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             letter-spacing: 0.1em;
-            color: rgba(74, 71, 56, 0.3);
-            font-weight: 400;
+            color: rgba(74, 71, 56, 0.5);
+            font-weight: 600;
+            transition: opacity 0.8s ease;
         }
+        .rh-num  { opacity: 1; }
         .rh-letter {
-            display: none;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.75rem;
-            color: #6b5e10;
-            font-weight: 700;
-            letter-spacing: 0.1em;
+            opacity: 0;
+            position: absolute;
+            top: 0; left: 0;
         }
-        [data-view="rhyme"] .rh-num { display: none; }
-        [data-view="rhyme"] .rh-letter { display: inline; }
+        [data-view="rhyme"] .rh-num    { opacity: 0; }
+        [data-view="rhyme"] .rh-letter { opacity: 1; }
 
         /* Hover Sync — dim non-active highlights */
         [data-view="alliteration"].alt-hovering .alt-h:not(.alt-active) {
             opacity: 0.2;
-            transition: opacity 0.2s ease;
+            transition: opacity 0.5s ease;
         }
         [data-view="rhyme"].rhyme-hovering .rhyme-highlight-span:not(.rhyme-active) {
             opacity: 0.25;
-            transition: opacity 0.2s ease;
+            transition: opacity 0.5s ease;
         }
 
         @media (max-width: 1023px) {
@@ -203,72 +202,72 @@
 <article class="relative">
 <div class="space-y-4 sm:space-y-6 md:space-y-8 font-headline text-xl sm:text-2xl md:text-3xl lg:text-[2.25rem] leading-[1.3] lg:leading-[1.4] text-on-surface-variant">
 <div class="line-container flex items-baseline" data-line="0">
-<span class="flex-1">I met a traveller from an antique <span class="rhyme-target">land</span>,</span>
+<span class="flex-1">I met a traveller from an antique <span class="rhyme-target rhyme-highlight-span rhyme-a">land</span>,</span>
 <span class="line-num">1</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">A</span>
 </div>
 <div class="line-container flex items-baseline" data-line="1">
-<span class="flex-1">Who said—“<span class="alt-h alt-2">Two</span> vast and <span class="alt-h alt-2">trunkless</span> legs of <span class="rhyme-target alt-h alt-1">stone</span></span>
+<span class="flex-1">Who said—“<span class="alt-h alt-2">Two</span> vast and <span class="alt-h alt-2">trunkless</span> legs of <span class="rhyme-target rhyme-highlight-span rhyme-b alt-h alt-1">stone</span></span>
 <span class="line-num">2</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">B</span>
 </div>
 <div class="line-container flex items-baseline" data-line="2">
-<span class="flex-1"><span class="alt-h alt-1">Stand</span> in the desert. Near them, on the <span class="rhyme-target alt-h alt-1">sand</span>,</span>
+<span class="flex-1"><span class="alt-h alt-1">Stand</span> in the desert. Near them, on the <span class="rhyme-target rhyme-highlight-span rhyme-a alt-h alt-1">sand</span>,</span>
 <span class="line-num">3</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">A</span>
 </div>
 <div class="line-container flex items-baseline" data-line="3">
-<span class="flex-1">Half <span class="alt-h alt-1">sunk</span>, a <span class="alt-h alt-1">shattered</span> visage lies, whose <span class="rhyme-target">frown</span>,</span>
+<span class="flex-1">Half <span class="alt-h alt-1">sunk</span>, a <span class="alt-h alt-1">shattered</span> visage lies, whose <span class="rhyme-target rhyme-highlight-span rhyme-b">frown</span>,</span>
 <span class="line-num">4</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">B</span>
 </div>
 <div class="line-container flex items-baseline" data-line="4">
-<span class="flex-1">And <span class="alt-h alt-8">wrinkled</span> lip, and sneer of <span class="alt-h alt-3">cold</span> <span class="rhyme-target alt-h alt-3">command</span>,</span>
+<span class="flex-1">And <span class="alt-h alt-8">wrinkled</span> lip, and sneer of <span class="alt-h alt-3">cold</span> <span class="rhyme-target rhyme-highlight-span rhyme-a alt-h alt-3">command</span>,</span>
 <span class="line-num">5</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">A</span>
 </div>
 <div class="line-container flex items-baseline" data-line="5">
-<span class="flex-1">Tell that its <span class="alt-h alt-4">sculptor</span> well those passions <span class="rhyme-target alt-h alt-8">read</span></span>
+<span class="flex-1">Tell that its <span class="alt-h alt-4">sculptor</span> well those passions <span class="rhyme-target rhyme-highlight-span rhyme-c alt-h alt-8">read</span></span>
 <span class="line-num">6</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">C</span>
 </div>
 <div class="line-container flex items-baseline" data-line="6">
-<span class="flex-1">Which yet <span class="alt-h alt-4">survive</span>, <span class="alt-h alt-4">stamped</span> on these lifeless <span class="rhyme-target">things</span>,</span>
+<span class="flex-1">Which yet <span class="alt-h alt-4">survive</span>, <span class="alt-h alt-4">stamped</span> on these lifeless <span class="rhyme-target rhyme-highlight-span rhyme-d">things</span>,</span>
 <span class="line-num">7</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">D</span>
 </div>
 <div class="line-container flex items-baseline" data-line="7">
-<span class="flex-1">The <span class="alt-h alt-5">hand</span> that mocked them, and the <span class="alt-h alt-5">heart</span> that <span class="rhyme-target">fed</span>;</span>
+<span class="flex-1">The <span class="alt-h alt-5">hand</span> that mocked them, and the <span class="alt-h alt-5">heart</span> that <span class="rhyme-target rhyme-highlight-span rhyme-c">fed</span>;</span>
 <span class="line-num">8</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">C</span>
 </div>
 <div class="line-container flex items-baseline" data-line="8">
-<span class="flex-1">And on the pedestal, these <span class="alt-h alt-13">words</span> <span class="rhyme-target">appear</span>:</span>
+<span class="flex-1">And on the pedestal, these <span class="alt-h alt-13">words</span> <span class="rhyme-target rhyme-highlight-span rhyme-e">appear</span>:</span>
 <span class="line-num">9</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">E</span>
 </div>
 <div class="line-container flex items-baseline italic text-on-surface" data-line="9">
-<span class="flex-1 pl-4 md:pl-8 lg:pl-12 border-l border-primary/20">‘<span class="alt-h alt-6">My</span> name is Ozymandias, <span class="alt-h alt-12">King</span> of <span class="rhyme-target alt-h alt-12">Kings</span>;</span>
+<span class="flex-1 pl-4 md:pl-8 lg:pl-12 border-l border-primary/20">‘<span class="alt-h alt-6">My</span> name is Ozymandias, <span class="alt-h alt-12">King</span> of <span class="rhyme-target rhyme-highlight-span rhyme-d alt-h alt-12">Kings</span>;</span>
 <span class="line-num">10</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">D</span>
 </div>
 <div class="line-container flex items-baseline italic text-on-surface" data-line="10">
-<span class="flex-1 pl-4 md:pl-8 lg:pl-12 border-l border-primary/20">Look on my <span class="alt-h alt-13">Works</span>, ye <span class="alt-h alt-6">Mighty</span>, and <span class="rhyme-target">despair</span>!’</span>
+<span class="flex-1 pl-4 md:pl-8 lg:pl-12 border-l border-primary/20">Look on my <span class="alt-h alt-13">Works</span>, ye <span class="alt-h alt-6">Mighty</span>, and <span class="rhyme-target rhyme-highlight-span rhyme-e">despair</span>!’</span>
 <span class="line-num">11</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">E</span>
 </div>
 <div class="line-container flex items-baseline pt-4 lg:pt-8" data-line="11">
-<span class="flex-1">Nothing <span class="alt-h alt-7">beside</span> <span class="alt-h alt-8">remains</span>. <span class="alt-h alt-8">Round</span> the <span class="rhyme-target">decay</span></span>
+<span class="flex-1">Nothing <span class="alt-h alt-7">beside</span> <span class="alt-h alt-8">remains</span>. <span class="alt-h alt-8">Round</span> the <span class="rhyme-target rhyme-highlight-span rhyme-f">decay</span></span>
 <span class="line-num">12</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">F</span>
 </div>
 <div class="line-container flex items-baseline" data-line="12">
-<span class="flex-1">Of that colossal <span class="alt-h alt-8">Wreck</span>, <span class="alt-h alt-7">boundless</span> and <span class="alt-h alt-7 rhyme-target">bare</span></span>
+<span class="flex-1">Of that colossal <span class="alt-h alt-8">Wreck</span>, <span class="alt-h alt-7">boundless</span> and <span class="alt-h alt-7 rhyme-target rhyme-highlight-span rhyme-e">bare</span></span>
 <span class="line-num">13</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">E</span>
 </div>
 <div class="line-container flex items-baseline" data-line="13">
-<span class="flex-1">The <span class="alt-h alt-9">lone</span> and <span class="alt-h alt-9">level</span> <span class="alt-h alt-10">sands</span> <span class="alt-h alt-10">stretch</span> far <span class="rhyme-target">away</span>.”</span>
+<span class="flex-1">The <span class="alt-h alt-9">lone</span> and <span class="alt-h alt-9">level</span> <span class="alt-h alt-10">sands</span> <span class="alt-h alt-10">stretch</span> far <span class="rhyme-target rhyme-highlight-span rhyme-f">away</span>.”</span>
 <span class="line-num">14</span>
 <span class="rhyme-marker font-label text-sm text-tertiary font-bold">F</span>
 </div>
@@ -295,39 +294,6 @@
                 activeBtn.classList.add('bg-[#efefd7]/50', 'text-[#446464]', 'font-bold', 'border-l-2', 'lg:border-l-4', 'border-[#446464]');
             }
 
-            // Reset Rhyme Highlights only (alliteration is CSS-based via data-view)
-            const lines = document.querySelectorAll('.line-container');
-            lines.forEach(line => {
-                const target = line.querySelector('.rhyme-target');
-                if (target) {
-                    // Remove all rhyme-specific classes but keep the original ones
-                    const originalClasses = Array.from(target.classList).filter(c => !c.startsWith('rhyme-') || c === 'rhyme-target');
-                    target.className = originalClasses.join(' ');
-                }
-            });
-
-            if (viewName === 'rhyme') {
-                // Corrected Rhyme Scheme Mapping:
-                // ABAB ACDC EFEF (as per standard Ozymandias sonnet structure)
-                const rhymeMap = {
-                    0: 'rhyme-a', 2: 'rhyme-a', 4: 'rhyme-a',
-                    1: 'rhyme-b', 3: 'rhyme-b',
-                    5: 'rhyme-c', 7: 'rhyme-c',
-                    6: 'rhyme-d', 9: 'rhyme-d',
-                    8: 'rhyme-e', 10: 'rhyme-e', 12: 'rhyme-e',
-                    11: 'rhyme-f', 13: 'rhyme-f'
-                };
-
-                Object.entries(rhymeMap).forEach(([idx, className]) => {
-                    const line = lines[idx];
-                    if (line) {
-                        const target = line.querySelector('.rhyme-target');
-                        if (target) {
-                            target.classList.add('rhyme-highlight-span', className);
-                        }
-                    }
-                });
-            }
         }
 
         // Initialize side labels: remove legacy line-num spans, then populate each
